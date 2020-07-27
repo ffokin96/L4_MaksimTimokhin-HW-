@@ -8,11 +8,6 @@
 
 import Foundation
 
-
-enum Manufacture: String {
-    case bmw, mersedes, maz, kamaz
-}
-
 enum CarAction {
     case turnEngineOn
     case turnEngineOff
@@ -32,8 +27,8 @@ class Car {
     var color: Int
     var wheelCount: Int
     var isEngineOn: Bool = false
-    var isWindowOn: Bool = false
-    var isSpolerUp:Bool = false
+    var isWindowOn: Bool = true
+    var isSpolerUp:Bool = true
     
     init (color: Int, wheelCount: Int) {
         self.color = color
@@ -56,15 +51,15 @@ class Car {
             isEngineOn = true
             
         case .openWindow:
-            guard isWindowOn else {
-                print("Окна уже закрыты")
+            guard !isWindowOn else {
+                print("Окна уже открыты")
                 return
             }
             isWindowOn = false
             
         case .closeWindow:
-            guard !isWindowOn else {
-                print("Окна уже открыты")
+            guard isWindowOn else {
+                print("Окна уже закрыты")
                 return
             }
             isWindowOn = true
@@ -83,6 +78,13 @@ class SportCar: Car {
     
     override func carAction(action: CarAction) {
         super.carAction(action: action)
+        if action == .speedUp {
+            speed = min(speed + 1, maxSpeedLimit)
+            
+        } else if action == .speedDowm {
+            speed = max(speed - 1, 0)
+        }
+        
         switch action {
         case .spolerUp:
             guard isSpolerOn else {
@@ -97,18 +99,15 @@ class SportCar: Car {
                 return
             }
             isSpolerOn = false
-            if action == .speedUp {
-                speed = min(speed + 1, maxSpeedLimit)
-                
-            } else if action == .speedDowm {
-                speed = max(speed - 1, 0)
-            }
+            
         default:
-            print("Действие не годиться")
+            print("{херня}")
             return
         }
     }
 }
+    
+
 class TrunkCar: Car {
     var trunkCappacity: Int
     var trunkIn: Int = 0
@@ -132,17 +131,16 @@ class TrunkCar: Car {
 }
 
 let truck = TrunkCar(cappacity: 100, wheelCount: 16, color: 0x000000)
-truck.carAction(action: .turnEngineOn)
-truck.carAction(action: .truckLoad)
-truck.carAction(action: .closeWindow)
-//let sportCar = SportCar(color: 0x738678, wheelCount: 4)
-//sportCar.carAction(action: .openWindow)
-//sportCar.carAction(action: .closeWindow)
-//sportCar.carAction(action: .speedUp)
-//sportCar.carAction(action: .spolerUp)
-//
-print("Truck: в багажнике \(truck.trunkIn)кг, двигатель включен \(truck.isEngineOn)")
+//truck.carAction(action: .turnEngineOn)
+//truck.carAction(action: .truckLoad)
+//truck.carAction(action: .openWindow)
+let sportCar = SportCar(color: 0x738678, wheelCount: 4)
 
-//print("SportCar: окна \(sportCar.isWindowOn), сполер \(sportCar.isSpolerOn)")
-print("Cасибо за внимание")
+
+sportCar.carAction(action: .speedUp)
+sportCar.carAction(action: .spolerDown)
+
+print("Truck: в багажнике \(truck.trunkIn)кг, двигатель включен \(truck.isEngineOn)")
+print("SportCar: окна \(sportCar.isWindowOn), сполер \(sportCar.isSpolerOn), скорость \(sportCar.speed)")
+print("Cпасибо за внимание")
 

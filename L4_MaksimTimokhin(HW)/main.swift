@@ -144,4 +144,5 @@ truck.carAction(action: .closeWindow)
 print("Truck: в багажнике \(truck.trunkIn)кг, двигатель включен \(truck.isEngineOn)")
 
 //print("SportCar: окна \(sportCar.isWindowOn), сполер \(sportCar.isSpolerOn)")
+print("Cасибо за внимание")
 

@@ -13,14 +13,20 @@ enum CarAction {
     case turnEngineOff
     case openWindow
     case closeWindow
-    
+}
+
+enum SportCarAction {
     case spolerUp
     case spolerDown
-    case truckLoad
-    case truckUnLoad
     case speedUp
     case speedDowm
 }
+
+enum TrunkCarAction {
+    case truckLoad
+    case truckUnLoad
+}
+
 
 
 class Car {
@@ -28,12 +34,14 @@ class Car {
     var wheelCount: Int
     var isEngineOn: Bool = false
     var isWindowOn: Bool = true
-    var isSpolerUp:Bool = true
+    
+    
     
     init (color: Int, wheelCount: Int) {
         self.color = color
         self.wheelCount = wheelCount
     }
+    
     func carAction(action: CarAction) {
         switch action {
         case .turnEngineOff:
@@ -63,11 +71,6 @@ class Car {
                 return
             }
             isWindowOn = true
-            
-            
-        default:
-            print("Данное действие на подходит для этого класса")
-            return
         }
     }
 }
@@ -78,6 +81,9 @@ class SportCar: Car {
     
     override func carAction(action: CarAction) {
         super.carAction(action: action)
+    }
+    
+    func sportCarAction(action: SportCarAction){
         if action == .speedUp {
             speed = min(speed + 1, maxSpeedLimit)
             
@@ -101,12 +107,10 @@ class SportCar: Car {
             isSpolerOn = false
             
         default:
-            print("{херня}")
-            return
+            print("ХЗ")
         }
     }
 }
-    
 
 class TrunkCar: Car {
     var trunkCappacity: Int
@@ -119,6 +123,8 @@ class TrunkCar: Car {
     
     override func carAction(action: CarAction) {
         super.carAction(action: action)
+    }
+    func truckCarAction(action: TrunkCarAction) {
         
         if action == .truckLoad {
             trunkIn = min(trunkIn + 1, trunkCappacity )
@@ -131,16 +137,16 @@ class TrunkCar: Car {
 }
 
 let truck = TrunkCar(cappacity: 100, wheelCount: 16, color: 0x000000)
-//truck.carAction(action: .turnEngineOn)
-//truck.carAction(action: .truckLoad)
-//truck.carAction(action: .openWindow)
+truck.carAction(action: .turnEngineOn)
+truck.truckCarAction(action: .truckLoad)
+truck.carAction(action: .openWindow)
+
 let sportCar = SportCar(color: 0x738678, wheelCount: 4)
-
-
-sportCar.carAction(action: .speedUp)
-sportCar.carAction(action: .spolerDown)
+sportCar.sportCarAction(action: .speedUp)
+sportCar.sportCarAction(action: .spolerDown)
 
 print("Truck: в багажнике \(truck.trunkIn)кг, двигатель включен \(truck.isEngineOn)")
 print("SportCar: окна \(sportCar.isWindowOn), сполер \(sportCar.isSpolerOn), скорость \(sportCar.speed)")
+
 print("Cпасибо за внимание")
 

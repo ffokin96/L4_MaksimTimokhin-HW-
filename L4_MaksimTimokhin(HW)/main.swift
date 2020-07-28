@@ -147,6 +147,5 @@ sportCar.sportCarAction(action: .spolerDown)
 
 print("Truck: в багажнике \(truck.trunkIn)кг, двигатель включен \(truck.isEngineOn)")
 print("SportCar: окна \(sportCar.isWindowOn), сполер \(sportCar.isSpolerOn), скорость \(sportCar.speed)")
-
 print("Cпасибо за внимание")
 
